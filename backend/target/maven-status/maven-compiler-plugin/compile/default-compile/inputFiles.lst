@@ -1,4 +1,5 @@
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/WhatsappFlowChallengeApplication.java
+/home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/config/CorsConfig.java
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/controller/CampaignController.java
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/controller/ContactController.java
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/controller/FlowController.java
@@ -22,3 +23,4 @@
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/service/FlowService.java
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/service/QueueScheduler.java
 /home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/service/SendQueueService.java
+/home/sevak/26/whatsapp-flow-challenge/backend/src/main/java/whatsapp_flow_challenge/service/WppConnectService.java

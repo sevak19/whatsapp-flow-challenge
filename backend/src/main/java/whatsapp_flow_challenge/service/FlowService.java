@@ -65,36 +65,36 @@ public class FlowService {
             String contactName = execution.getContact().getName();
             String contactPhone = execution.getContact().getPhone();
 
-            flowStepRepository
-                .findByFlowIdAndStepOrder(flowId, currentStep)
-                .ifPresent(step -> {
-                    SendQueue queue = new SendQueue();
-                    queue.setContact(execution.getContact());
-                    queue.setMessage(step.getMessage());
-                    queue.setScheduledAt(LocalDateTime.now());
-                    queue.setStatus("PENDING");
-                    sendQueueRepository.save(queue);
+            List<FlowStep> currentSteps = flowStepRepository.findStepsByFlowAndOrder(flowId, currentStep);
+            if (currentSteps.isEmpty()) {
+                execution.setStatus("COMPLETED");
+                flowExecutionRepository.save(execution);
+                continue;
+            }
 
-                    System.out.println("[FLUXO] Etapa " + currentStep + " enfileirada para " + contactName + " (" + contactPhone + "): \"" + step.getMessage() + "\"");
+            FlowStep step = currentSteps.get(0);
 
-                    flowStepRepository
-                        .findByFlowIdAndStepOrder(flowId, currentStep + 1)
-                        .ifPresentOrElse(
-                            nextStep -> {
-                                execution.setCurrentStep(currentStep + 1);
-                                execution.setNextExecutionAt(
-                                    LocalDateTime.now().plusMinutes(nextStep.getDelayMinutes())
-                                );
-                                System.out.println("[FLUXO] Próxima etapa em " + nextStep.getDelayMinutes() + " minuto(s)");
-                            },
-                            () -> {
-                                execution.setStatus("COMPLETED");
-                                System.out.println("[FLUXO] Fluxo concluído para " + contactName);
-                            }
-                        );
+            SendQueue queue = new SendQueue();
+            queue.setContact(execution.getContact());
+            queue.setMessage(step.getMessage());
+            queue.setScheduledAt(LocalDateTime.now());
+            queue.setStatus("PENDING");
+            sendQueueRepository.save(queue);
 
-                    flowExecutionRepository.save(execution);
-                });
+            System.out.println("[FLUXO] Etapa " + currentStep + " enfileirada para " + contactName + " (" + contactPhone + "): \"" + step.getMessage() + "\"");
+
+            List<FlowStep> nextSteps = flowStepRepository.findStepsByFlowAndOrder(flowId, currentStep + 1);
+            if (!nextSteps.isEmpty()) {
+                FlowStep nextStep = nextSteps.get(0);
+                execution.setCurrentStep(currentStep + 1);
+                execution.setNextExecutionAt(LocalDateTime.now().plusMinutes(nextStep.getDelayMinutes()));
+                System.out.println("[FLUXO] Próxima etapa em " + nextStep.getDelayMinutes() + " minuto(s)");
+            } else {
+                execution.setStatus("COMPLETED");
+                System.out.println("[FLUXO] Fluxo concluído para " + contactName);
+            }
+
+            flowExecutionRepository.save(execution);
         }
     }
 }

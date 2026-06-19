@@ -31,6 +31,9 @@ public class CampaignService {
     }
 
     public Campaign save(Campaign campaign) {
+        if (campaign.getStatus() == null) {
+            campaign.setStatus("ACTIVE");
+        }
         return repository.save(campaign);
     }
 
@@ -44,19 +47,25 @@ public class CampaignService {
 
         List<Contact> contacts = contactRepository.findAll();
 
+        long accumulatedDelay = 0;
+
         for (Contact contact : contacts) {
             int delay = random.nextInt(
                 campaign.getMaxDelaySeconds() - campaign.getMinDelaySeconds() + 1
             ) + campaign.getMinDelaySeconds();
 
+            accumulatedDelay += delay;
+
             SendQueue queue = new SendQueue();
             queue.setContact(contact);
             queue.setCampaign(campaign);
             queue.setMessage(campaign.getMessage());
-            queue.setScheduledAt(LocalDateTime.now().plusSeconds(delay));
+            queue.setScheduledAt(LocalDateTime.now().plusSeconds(accumulatedDelay));
             queue.setStatus("PENDING");
 
             sendQueueRepository.save(queue);
+
+            System.out.println("[CAMPANHA] " + contact.getName() + " agendado para daqui " + accumulatedDelay + "s");
         }
     }
 }

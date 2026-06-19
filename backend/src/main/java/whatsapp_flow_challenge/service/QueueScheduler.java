@@ -12,33 +12,36 @@ import java.util.List;
 public class QueueScheduler {
 
     private final SendQueueRepository sendQueueRepository;
+    private final WppConnectService wppConnectService;
 
-    public QueueScheduler(SendQueueRepository sendQueueRepository) {
+    public QueueScheduler(
+            SendQueueRepository sendQueueRepository,
+            WppConnectService wppConnectService
+    ) {
         this.sendQueueRepository = sendQueueRepository;
+        this.wppConnectService = wppConnectService;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 1000)
     public void processQueue() {
-
         List<SendQueue> pendingMessages =
                 sendQueueRepository.findPendingMessages(LocalDateTime.now());
 
-        /*System.out.println(
-                "Mensagens pendentes: "
-                + pendingMessages.size()
-        );*/
+        if (pendingMessages.isEmpty()) return;
 
-        for (SendQueue message : pendingMessages) {
-            try {
-            // chamada WPPConnect/mock aqui
-            System.out.println("Enviando para: " + message.getContact().getPhone());
-            message.setStatus("SENT");                    // <- ponto 2
+        SendQueue message = pendingMessages.get(0);
+        try {
+            wppConnectService.sendMessage(
+                message.getContact().getPhone(),
+                message.getMessage()
+            );
+            message.setStatus("SENT");
             message.setSentAt(LocalDateTime.now());
-            } catch (Exception e) {
-                message.setStatus("ERROR");
-                message.setErrorMessage(e.getMessage());
-            }
-            sendQueueRepository.save(message);
+        } catch (Exception e) {
+            message.setStatus("ERROR");
+            message.setErrorMessage(e.getMessage());
+            System.out.println("[ERRO] " + e.getMessage());
         }
+        sendQueueRepository.save(message);
     }
 }

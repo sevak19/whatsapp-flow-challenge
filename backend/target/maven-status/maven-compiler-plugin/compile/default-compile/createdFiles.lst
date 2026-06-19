@@ -1,4 +1,6 @@
 whatsapp_flow_challenge/entity/Flow.class
+whatsapp_flow_challenge/config/CorsConfig$1.class
+whatsapp_flow_challenge/controller/FlowStepController.class
 whatsapp_flow_challenge/entity/SendQueue.class
 whatsapp_flow_challenge/repository/FlowRepository.class
 whatsapp_flow_challenge/service/SendQueueService.class
@@ -7,6 +9,7 @@ whatsapp_flow_challenge/scheduler/FlowScheduler.class
 whatsapp_flow_challenge/repository/ContactRepository.class
 whatsapp_flow_challenge/entity/FlowExecution.class
 whatsapp_flow_challenge/controller/ContactController.class
+whatsapp_flow_challenge/config/CorsConfig.class
 whatsapp_flow_challenge/repository/CampaignRepository.class
 whatsapp_flow_challenge/service/ContactService.class
 whatsapp_flow_challenge/repository/FlowExecutionRepository.class
@@ -14,8 +17,11 @@ whatsapp_flow_challenge/service/CampaignService.class
 whatsapp_flow_challenge/entity/FlowStep.class
 whatsapp_flow_challenge/controller/SendQueueController.class
 whatsapp_flow_challenge/WhatsappFlowChallengeApplication.class
+whatsapp_flow_challenge/controller/FlowController.class
 whatsapp_flow_challenge/entity/Contact.class
 whatsapp_flow_challenge/repository/FlowStepRepository.class
+whatsapp_flow_challenge/service/WppConnectService.class
+whatsapp_flow_challenge/service/FlowService.class
 whatsapp_flow_challenge/controller/CampaignController.class
 whatsapp_flow_challenge/entity/Campaign.class
 whatsapp_flow_challenge/service/QueueScheduler.class

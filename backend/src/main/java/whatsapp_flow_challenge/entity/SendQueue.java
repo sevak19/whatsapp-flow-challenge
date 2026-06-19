@@ -38,4 +38,60 @@ public class SendQueue {
     public Long getId() {
         return id;
     }
+
+    public Contact getContact() {
+    return contact;
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public LocalDateTime getScheduledAt() {
+        return scheduledAt;
+    }
+
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setScheduledAt(LocalDateTime scheduledAt) {
+        this.scheduledAt = scheduledAt;
+    }
+
+    public void setStatus(String status) {
+    this.status = status;
+    }
+
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }

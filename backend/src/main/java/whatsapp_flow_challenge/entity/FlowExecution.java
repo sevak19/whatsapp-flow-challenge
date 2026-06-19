@@ -30,50 +30,22 @@ public class FlowExecution {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public FlowExecution() {
+    public FlowExecution() {}
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Flow getFlow() {
-        return flow;
-    }
-
-    public void setFlow(Flow flow) {
-        this.flow = flow;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    public Integer getCurrentStep() {
-        return currentStep;
-    }
-
-    public void setCurrentStep(Integer currentStep) {
-        this.currentStep = currentStep;
-    }
-
-    public LocalDateTime getNextExecutionAt() {
-        return nextExecutionAt;
-    }
-
-    public void setNextExecutionAt(LocalDateTime nextExecutionAt) {
-        this.nextExecutionAt = nextExecutionAt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public Long getId() { return id; }
+    public Flow getFlow() { return flow; }
+    public void setFlow(Flow flow) { this.flow = flow; }
+    public Contact getContact() { return contact; }
+    public void setContact(Contact contact) { this.contact = contact; }
+    public Integer getCurrentStep() { return currentStep; }
+    public void setCurrentStep(Integer currentStep) { this.currentStep = currentStep; }
+    public LocalDateTime getNextExecutionAt() { return nextExecutionAt; }
+    public void setNextExecutionAt(LocalDateTime nextExecutionAt) { this.nextExecutionAt = nextExecutionAt; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
